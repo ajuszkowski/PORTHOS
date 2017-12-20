@@ -4,7 +4,7 @@ grammar Porthos;
 package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
-import dartagnan.program.Thread;
+import dartagnan.program.ProgramThread;
 import java.util.HashMap;
 import java.util.Map;
 }
@@ -51,7 +51,7 @@ location returns [Location loc]:
 register returns [Register reg]:
 	r = WORD {$reg = new Register($r.getText());};
 
-local [String mainThread] returns [Thread t]:
+local [String mainThread] returns [ProgramThread t]:
 	r = register '<-' e = arith_expr [mainThread] {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -60,7 +60,7 @@ local [String mainThread] returns [Thread t]:
 		Register pointerReg = mapThreadRegs.get($r.reg.getName());
 		$t = new Local(pointerReg, $e.expr);
 	};
-load [String mainThread] returns [Thread t]:
+load [String mainThread] returns [ProgramThread t]:
 	r = register '<:-' l = location {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -73,7 +73,7 @@ load [String mainThread] returns [Thread t]:
 		Location pointerLoc = mapLocs.get($l.loc.getName());
 		$t = new Load(pointerReg, pointerLoc);
 	};
-store [String mainThread] returns [Thread t]:
+store [String mainThread] returns [ProgramThread t]:
 	l = location ':=' r = register {
 		if(!(mapLocs.keySet().contains($l.loc.getName()))) {
 			System.out.println(String.format("Location %s must be initialized", $l.loc.getName()));
@@ -86,7 +86,7 @@ store [String mainThread] returns [Thread t]:
 		Location pointerLoc = mapLocs.get($l.loc.getName());
 		$t = new Store(pointerLoc, pointerReg);
 	};
-read [String mainThread] returns [Thread t]:
+read [String mainThread] returns [ProgramThread t]:
 	r = register '=' l = location POINT 'load' LPAR at = ATOMIC RPAR {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -99,7 +99,7 @@ read [String mainThread] returns [Thread t]:
 		Location pointerLoc = mapLocs.get($l.loc.getName());
 		$t = new Read(pointerReg, pointerLoc, $at.getText());
 	};
-write [String mainThread] returns [Thread t]:
+write [String mainThread] returns [ProgramThread t]:
 	l = location POINT 'store' LPAR at = ATOMIC COMMA r = register RPAR {
 		if(!(mapLocs.keySet().contains($l.loc.getName()))) {
 			System.out.println(String.format("Location %s must be initialized", $l.loc.getName()));
@@ -112,7 +112,7 @@ write [String mainThread] returns [Thread t]:
 		Location pointerLoc = mapLocs.get($l.loc.getName());
 		$t = new Write(pointerLoc, pointerReg, $at.getText());
 	};
-fence returns [Thread t]:
+fence returns [ProgramThread t]:
 	| mfence {$t = new Mfence();}
 	| sync {$t = new Sync();}
 	| lwsync {$t = new Lwsync();}
@@ -123,34 +123,34 @@ sync : 'sync';
 lwsync : 'lwsync';
 isync : 'isync';
 
-inst [String mainThread] returns [Thread t]:
+inst [String mainThread] returns [ProgramThread t]:
 	| t1 = atom [mainThread] {$t = $t1.t;}
 	| t2 = seq [mainThread] {$t = $t2.t;} 
 	| t3 = while_ [mainThread] {$t = $t3.t;} 
 	| t4 = if1 [mainThread] {$t = $t4.t;}
 	| t5 = if2 [mainThread] {$t = $t5.t;};
-atom [String mainThread] returns [Thread t]:
+atom [String mainThread] returns [ProgramThread t]:
 	| t1 = local [mainThread] {$t = $t1.t;}
 	| t2 = load [mainThread] {$t = $t2.t;}
 	| t3 = store [mainThread] {$t = $t3.t;}
 	| t4 = fence {$t = $t4.t;}
 	| t5 = read [mainThread] {$t = $t5.t;}
 	| t6 = write [mainThread] {$t = $t6.t;};
-seq [String mainThread] returns [Thread t]: 
+seq [String mainThread] returns [ProgramThread t]: 
 	| t1 = atom [mainThread] ';' t2 = inst[mainThread] {$t = new Seq($t1.t, $t2.t);} 
 	| t3 = while_ [mainThread] ';' t4 = inst[mainThread] {$t = new Seq($t3.t, $t4.t);}
 	| t5 = if1 [mainThread] ';' t6 = inst[mainThread] {$t = new Seq($t5.t, $t6.t);}
 	| t7 = if2 [mainThread] ';' t8 = inst[mainThread] {$t = new Seq($t7.t, $t8.t);};
-if1 [String mainThread] returns [Thread t]: 
+if1 [String mainThread] returns [ProgramThread t]: 
 	'if' b = bool_expr [mainThread] ('then')* LCBRA t1 = inst [mainThread] RCBRA 'else' LCBRA t2 = inst [mainThread] RCBRA {
 		$t = new If($b.expr, $t1.t, $t2.t);
 	};
-if2 [String mainThread] returns [Thread t]: 
+if2 [String mainThread] returns [ProgramThread t]: 
 	'if' b = bool_expr [mainThread] ('then')* LCBRA t1 = inst [mainThread] RCBRA {
 		$t = new If($b.expr, $t1.t, new Skip());
 	};
 
-while_ [String mainThread] returns [Thread t]:
+while_ [String mainThread] returns [ProgramThread t]:
 	'while' b = bool_expr [mainThread] LCBRA t1 = inst [mainThread] RCBRA {
 		$t = new While($b.expr, $t1.t);
 	};

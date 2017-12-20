@@ -12,13 +12,13 @@ import dartagnan.utils.MapSSA;
 import dartagnan.utils.Pair;
 import dartagnan.utils.Utils;
 
-public class If extends Thread {
+public class If extends ProgramThread {
 	
 	private BExpr pred;
-	private Thread t1;
-	private Thread t2;
+	private ProgramThread t1;
+	private ProgramThread t2;
 	
-	public If(BExpr pred, Thread t1, Thread t2) {
+	public If(BExpr pred, ProgramThread t1, ProgramThread t2) {
 		this.pred = pred;
 		this.t1 = t1;
 		this.t2 = t2;
@@ -37,19 +37,19 @@ public class If extends Thread {
 		return String.join("", Collections.nCopies(condLevel, "  "));
 	}
 	
-	public Thread getT1() {
+	public ProgramThread getT1() {
 		return t1;
 	}
 	
-	public Thread getT2() {
+	public ProgramThread getT2() {
 		return t2;
 	}
 	
-	public void setT1(Thread t) {
+	public void setT1(ProgramThread t) {
 		t1 = t;
 	}
 	
-	public void setT2(Thread t) {
+	public void setT2(ProgramThread t) {
 		t2 = t;
 	}
 	
@@ -105,9 +105,9 @@ public class If extends Thread {
 	
 	public If clone() {
 		BExpr newPred = pred.clone();
-		Thread newT1 = t1.clone();
+		ProgramThread newT1 = t1.clone();
 		newT1.decCondLevel();
-		Thread newT2 = t2.clone();
+		ProgramThread newT2 = t2.clone();
 		newT2.decCondLevel();
 		If newIf = new If(newPred, newT1, newT2);
 		newIf.condLevel = condLevel;

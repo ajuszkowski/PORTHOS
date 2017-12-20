@@ -4,12 +4,12 @@ import java.util.Collections;
 
 import dartagnan.expression.BExpr;
 
-public class While extends Thread {
+public class While extends ProgramThread {
 	
 	private BExpr pred;
-	private Thread t;
+	private ProgramThread t;
 	
-	public While(BExpr pred, Thread t) {
+	public While(BExpr pred, ProgramThread t) {
 		this.pred = pred;
 		this.t = t;
 		t.incCondLevel();
@@ -29,23 +29,23 @@ public class While extends Thread {
 		t.decCondLevel();
 	}
 	
-	public Thread unroll(int steps) {
+	public ProgramThread unroll(int steps) {
 		if(steps == 0)
 			return new Skip();
 		else {
-			Thread copyT = t.clone();
+			ProgramThread copyT = t.clone();
 			copyT.decCondLevel();
 			copyT = copyT.unroll(steps);
 			int oldCondLevel = condLevel;
-			Thread newThread = new If(pred, new Seq(copyT, this.unroll(steps - 1)), new Skip());
-			newThread.condLevel = oldCondLevel;
-			return newThread;
+			ProgramThread newProgramThread = new If(pred, new Seq(copyT, this.unroll(steps - 1)), new Skip());
+			newProgramThread.condLevel = oldCondLevel;
+			return newProgramThread;
 		}
 	}
 	
 	public While clone() {
 		BExpr newPred = pred.clone();
-		Thread newT = t.clone();
+		ProgramThread newT = t.clone();
 		newT.decCondLevel();
 		While newWhile = new While(newPred, newT);
 		newWhile.condLevel = condLevel;

@@ -1,4 +1,4 @@
-// Generated from /run/media/ael/Projects/AaltoWork/PORTHOS/dartagnan/Porthos.g4 by ANTLR 4.7
+// Generated from /run/media/ael/Projects/AaltoWork/PORTHOS/dartagnan/Cmin.g4 by ANTLR 4.7
 
 package dartagnan;
 import dartagnan.program.*;
@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class PorthosParser extends Parser {
+public class CminParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -93,7 +93,7 @@ public class PorthosParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Porthos.g4"; }
+	public String getGrammarFileName() { return "Cmin.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -106,9 +106,9 @@ public class PorthosParser extends Parser {
 
 
 	private Map<String, Location> mapLocs = new HashMap<String, Location>();
-	private Map<String, Map<String, Register>> mapRegs = new HashMap<String, Map<String, Register>>();	
+	private Map<String, Map<String, Register>> mapRegs = new HashMap<String, Map<String, Register>>();
 
-	public PorthosParser(TokenStream input) {
+	public CminParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -125,7 +125,7 @@ public class PorthosParser extends Parser {
 		public Arith_atomContext arith_atom(int i) {
 			return getRuleContext(Arith_atomContext.class,i);
 		}
-		public TerminalNode ARITH_OP() { return getToken(PorthosParser.ARITH_OP, 0); }
+		public TerminalNode ARITH_OP() { return getToken(CminParser.ARITH_OP, 0); }
 		public Arith_exprContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
 		public Arith_exprContext(ParserRuleContext parent, int invokingState, String mainThread) {
 			super(parent, invokingState);
@@ -134,11 +134,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_arith_expr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterArith_expr(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterArith_expr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitArith_expr(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitArith_expr(this);
 		}
 	}
 
@@ -197,12 +197,12 @@ public class PorthosParser extends Parser {
 		public Token num;
 		public RegisterContext r;
 		public Arith_exprContext e;
-		public TerminalNode DIGIT() { return getToken(PorthosParser.DIGIT, 0); }
+		public TerminalNode DIGIT() { return getToken(CminParser.DIGIT, 0); }
 		public RegisterContext register() {
 			return getRuleContext(RegisterContext.class,0);
 		}
-		public TerminalNode LPAR() { return getToken(PorthosParser.LPAR, 0); }
-		public TerminalNode RPAR() { return getToken(PorthosParser.RPAR, 0); }
+		public TerminalNode LPAR() { return getToken(CminParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(CminParser.RPAR, 0); }
 		public Arith_exprContext arith_expr() {
 			return getRuleContext(Arith_exprContext.class,0);
 		}
@@ -214,11 +214,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_arith_atom; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterArith_atom(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterArith_atom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitArith_atom(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitArith_atom(this);
 		}
 	}
 
@@ -292,15 +292,15 @@ public class PorthosParser extends Parser {
 		public Arith_exprContext a1;
 		public Token op;
 		public Arith_exprContext a2;
-		public TerminalNode LPAR() { return getToken(PorthosParser.LPAR, 0); }
-		public TerminalNode RPAR() { return getToken(PorthosParser.RPAR, 0); }
+		public TerminalNode LPAR() { return getToken(CminParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(CminParser.RPAR, 0); }
 		public List<Arith_exprContext> arith_expr() {
 			return getRuleContexts(Arith_exprContext.class);
 		}
 		public Arith_exprContext arith_expr(int i) {
 			return getRuleContext(Arith_exprContext.class,i);
 		}
-		public TerminalNode COMP_OP() { return getToken(PorthosParser.COMP_OP, 0); }
+		public TerminalNode COMP_OP() { return getToken(CminParser.COMP_OP, 0); }
 		public Arith_compContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
 		public Arith_compContext(ParserRuleContext parent, int invokingState, String mainThread) {
 			super(parent, invokingState);
@@ -309,11 +309,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_arith_comp; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterArith_comp(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterArith_comp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitArith_comp(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitArith_comp(this);
 		}
 	}
 
@@ -362,7 +362,7 @@ public class PorthosParser extends Parser {
 		public Bool_atomContext bool_atom(int i) {
 			return getRuleContext(Bool_atomContext.class,i);
 		}
-		public TerminalNode BOOL_OP() { return getToken(PorthosParser.BOOL_OP, 0); }
+		public TerminalNode BOOL_OP() { return getToken(CminParser.BOOL_OP, 0); }
 		public Bool_exprContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
 		public Bool_exprContext(ParserRuleContext parent, int invokingState, String mainThread) {
 			super(parent, invokingState);
@@ -371,11 +371,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_bool_expr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterBool_expr(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterBool_expr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitBool_expr(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitBool_expr(this);
 		}
 	}
 
@@ -434,8 +434,8 @@ public class PorthosParser extends Parser {
 		public Arith_compContext arith_comp() {
 			return getRuleContext(Arith_compContext.class,0);
 		}
-		public TerminalNode LPAR() { return getToken(PorthosParser.LPAR, 0); }
-		public TerminalNode RPAR() { return getToken(PorthosParser.RPAR, 0); }
+		public TerminalNode LPAR() { return getToken(CminParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(CminParser.RPAR, 0); }
 		public Bool_exprContext bool_expr() {
 			return getRuleContext(Bool_exprContext.class,0);
 		}
@@ -447,11 +447,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_bool_atom; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterBool_atom(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterBool_atom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitBool_atom(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitBool_atom(this);
 		}
 	}
 
@@ -536,18 +536,18 @@ public class PorthosParser extends Parser {
 	public static class LocationContext extends ParserRuleContext {
 		public Location loc;
 		public Token l;
-		public TerminalNode WORD() { return getToken(PorthosParser.WORD, 0); }
+		public TerminalNode WORD() { return getToken(CminParser.WORD, 0); }
 		public LocationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_location; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterLocation(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterLocation(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitLocation(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitLocation(this);
 		}
 	}
 
@@ -576,18 +576,18 @@ public class PorthosParser extends Parser {
 	public static class RegisterContext extends ParserRuleContext {
 		public Register reg;
 		public Token r;
-		public TerminalNode WORD() { return getToken(PorthosParser.WORD, 0); }
+		public TerminalNode WORD() { return getToken(CminParser.WORD, 0); }
 		public RegisterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_register; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterRegister(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterRegister(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitRegister(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitRegister(this);
 		}
 	}
 
@@ -632,11 +632,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_local; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterLocal(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterLocal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitLocal(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitLocal(this);
 		}
 	}
 
@@ -692,11 +692,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_load; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterLoad(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterLoad(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitLoad(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitLoad(this);
 		}
 	}
 
@@ -756,11 +756,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_store; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterStore(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterStore(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitStore(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitStore(this);
 		}
 	}
 
@@ -807,16 +807,16 @@ public class PorthosParser extends Parser {
 		public RegisterContext r;
 		public LocationContext l;
 		public Token at;
-		public TerminalNode POINT() { return getToken(PorthosParser.POINT, 0); }
-		public TerminalNode LPAR() { return getToken(PorthosParser.LPAR, 0); }
-		public TerminalNode RPAR() { return getToken(PorthosParser.RPAR, 0); }
+		public TerminalNode POINT() { return getToken(CminParser.POINT, 0); }
+		public TerminalNode LPAR() { return getToken(CminParser.LPAR, 0); }
+		public TerminalNode RPAR() { return getToken(CminParser.RPAR, 0); }
 		public RegisterContext register() {
 			return getRuleContext(RegisterContext.class,0);
 		}
 		public LocationContext location() {
 			return getRuleContext(LocationContext.class,0);
 		}
-		public TerminalNode ATOMIC() { return getToken(PorthosParser.ATOMIC, 0); }
+		public TerminalNode ATOMIC() { return getToken(CminParser.ATOMIC, 0); }
 		public ReadContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
 		public ReadContext(ParserRuleContext parent, int invokingState, String mainThread) {
 			super(parent, invokingState);
@@ -825,11 +825,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_read; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterRead(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterRead(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitRead(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitRead(this);
 		}
 	}
 
@@ -886,14 +886,14 @@ public class PorthosParser extends Parser {
 		public LocationContext l;
 		public Token at;
 		public RegisterContext r;
-		public TerminalNode POINT() { return getToken(PorthosParser.POINT, 0); }
-		public TerminalNode LPAR() { return getToken(PorthosParser.LPAR, 0); }
-		public TerminalNode COMMA() { return getToken(PorthosParser.COMMA, 0); }
-		public TerminalNode RPAR() { return getToken(PorthosParser.RPAR, 0); }
+		public TerminalNode POINT() { return getToken(CminParser.POINT, 0); }
+		public TerminalNode LPAR() { return getToken(CminParser.LPAR, 0); }
+		public TerminalNode COMMA() { return getToken(CminParser.COMMA, 0); }
+		public TerminalNode RPAR() { return getToken(CminParser.RPAR, 0); }
 		public LocationContext location() {
 			return getRuleContext(LocationContext.class,0);
 		}
-		public TerminalNode ATOMIC() { return getToken(PorthosParser.ATOMIC, 0); }
+		public TerminalNode ATOMIC() { return getToken(CminParser.ATOMIC, 0); }
 		public RegisterContext register() {
 			return getRuleContext(RegisterContext.class,0);
 		}
@@ -905,11 +905,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_write; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterWrite(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterWrite(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitWrite(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitWrite(this);
 		}
 	}
 
@@ -980,11 +980,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_fence; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterFence(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterFence(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitFence(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitFence(this);
 		}
 	}
 
@@ -1055,11 +1055,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mfence; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterMfence(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterMfence(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitMfence(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitMfence(this);
 		}
 	}
 
@@ -1091,11 +1091,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_sync; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterSync(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterSync(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitSync(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitSync(this);
 		}
 	}
 
@@ -1127,11 +1127,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_lwsync; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterLwsync(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterLwsync(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitLwsync(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitLwsync(this);
 		}
 	}
 
@@ -1163,11 +1163,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_isync; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterIsync(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterIsync(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitIsync(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitIsync(this);
 		}
 	}
 
@@ -1223,11 +1223,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_inst; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterInst(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterInst(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitInst(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitInst(this);
 		}
 	}
 
@@ -1331,11 +1331,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_atom; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterAtom(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterAtom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitAtom(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitAtom(this);
 		}
 	}
 
@@ -1446,11 +1446,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_seq; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterSeq(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterSeq(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitSeq(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitSeq(this);
 		}
 	}
 
@@ -1533,13 +1533,13 @@ public class PorthosParser extends Parser {
 		public Bool_exprContext b;
 		public InstContext t1;
 		public InstContext t2;
-		public List<TerminalNode> LCBRA() { return getTokens(PorthosParser.LCBRA); }
+		public List<TerminalNode> LCBRA() { return getTokens(CminParser.LCBRA); }
 		public TerminalNode LCBRA(int i) {
-			return getToken(PorthosParser.LCBRA, i);
+			return getToken(CminParser.LCBRA, i);
 		}
-		public List<TerminalNode> RCBRA() { return getTokens(PorthosParser.RCBRA); }
+		public List<TerminalNode> RCBRA() { return getTokens(CminParser.RCBRA); }
 		public TerminalNode RCBRA(int i) {
-			return getToken(PorthosParser.RCBRA, i);
+			return getToken(CminParser.RCBRA, i);
 		}
 		public Bool_exprContext bool_expr() {
 			return getRuleContext(Bool_exprContext.class,0);
@@ -1558,11 +1558,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_if1; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterIf1(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterIf1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitIf1(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitIf1(this);
 		}
 	}
 
@@ -1626,8 +1626,8 @@ public class PorthosParser extends Parser {
 		public ProgramThread t;
 		public Bool_exprContext b;
 		public InstContext t1;
-		public TerminalNode LCBRA() { return getToken(PorthosParser.LCBRA, 0); }
-		public TerminalNode RCBRA() { return getToken(PorthosParser.RCBRA, 0); }
+		public TerminalNode LCBRA() { return getToken(CminParser.LCBRA, 0); }
+		public TerminalNode RCBRA() { return getToken(CminParser.RCBRA, 0); }
 		public Bool_exprContext bool_expr() {
 			return getRuleContext(Bool_exprContext.class,0);
 		}
@@ -1642,11 +1642,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_if2; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterIf2(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterIf2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitIf2(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitIf2(this);
 		}
 	}
 
@@ -1702,8 +1702,8 @@ public class PorthosParser extends Parser {
 		public ProgramThread t;
 		public Bool_exprContext b;
 		public InstContext t1;
-		public TerminalNode LCBRA() { return getToken(PorthosParser.LCBRA, 0); }
-		public TerminalNode RCBRA() { return getToken(PorthosParser.RCBRA, 0); }
+		public TerminalNode LCBRA() { return getToken(CminParser.LCBRA, 0); }
+		public TerminalNode RCBRA() { return getToken(CminParser.RCBRA, 0); }
 		public Bool_exprContext bool_expr() {
 			return getRuleContext(Bool_exprContext.class,0);
 		}
@@ -1718,11 +1718,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_while_; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterWhile_(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterWhile_(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitWhile_(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitWhile_(this);
 		}
 	}
 
@@ -1767,13 +1767,13 @@ public class PorthosParser extends Parser {
 		public Token value;
 		public Token thrd;
 		public RegisterContext r;
-		public List<TerminalNode> LCBRA() { return getTokens(PorthosParser.LCBRA); }
+		public List<TerminalNode> LCBRA() { return getTokens(CminParser.LCBRA); }
 		public TerminalNode LCBRA(int i) {
-			return getToken(PorthosParser.LCBRA, i);
+			return getToken(CminParser.LCBRA, i);
 		}
-		public List<TerminalNode> RCBRA() { return getTokens(PorthosParser.RCBRA); }
+		public List<TerminalNode> RCBRA() { return getTokens(CminParser.RCBRA); }
 		public TerminalNode RCBRA(int i) {
-			return getToken(PorthosParser.RCBRA, i);
+			return getToken(CminParser.RCBRA, i);
 		}
 		public List<LocationContext> location() {
 			return getRuleContexts(LocationContext.class);
@@ -1781,13 +1781,13 @@ public class PorthosParser extends Parser {
 		public LocationContext location(int i) {
 			return getRuleContext(LocationContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(PorthosParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(CminParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(PorthosParser.COMMA, i);
+			return getToken(CminParser.COMMA, i);
 		}
-		public List<TerminalNode> DIGIT() { return getTokens(PorthosParser.DIGIT); }
+		public List<TerminalNode> DIGIT() { return getTokens(CminParser.DIGIT); }
 		public TerminalNode DIGIT(int i) {
-			return getToken(PorthosParser.DIGIT, i);
+			return getToken(CminParser.DIGIT, i);
 		}
 		public List<InstContext> inst() {
 			return getRuleContexts(InstContext.class);
@@ -1809,11 +1809,11 @@ public class PorthosParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).enterProgram(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PorthosListener ) ((PorthosListener)listener).exitProgram(this);
+			if ( listener instanceof CminListener ) ((CminListener)listener).exitProgram(this);
 		}
 	}
 

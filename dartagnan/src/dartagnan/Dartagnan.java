@@ -15,10 +15,6 @@ import com.microsoft.z3.Status;
 import com.microsoft.z3.Z3Exception;
 import com.microsoft.z3.enumerations.Z3_ast_print_mode;
 
-import dartagnan.LitmusLexer;
-import dartagnan.LitmusParser;
-import dartagnan.PorthosLexer;
-import dartagnan.PorthosParser;
 import dartagnan.program.Program;
 import dartagnan.wmm.Domain;
 

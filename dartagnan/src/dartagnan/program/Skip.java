@@ -18,7 +18,7 @@ public class Skip extends Event {
 		return newSkip;
 	}
 	
-	public Thread allCompile() {
+	public ProgramThread allCompile() {
 		return this;
 	}
 }

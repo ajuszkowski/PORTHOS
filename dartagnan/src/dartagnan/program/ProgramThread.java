@@ -9,7 +9,7 @@ import dartagnan.utils.LastModMap;
 import dartagnan.utils.MapSSA;
 import dartagnan.utils.Pair;
 
-public class Thread {
+public class ProgramThread {
 
 	protected int condLevel;
 	// Main thread where this Event, Seq, etc belongs
@@ -34,29 +34,29 @@ public class Thread {
 		condLevel--;
 	}
 	
-	public Thread unroll(int steps) {
+	public ProgramThread unroll(int steps) {
 		System.out.println("Check unroll!");
 		return this;
 	}
 	
-	public Thread compile(String target, boolean ctrl, boolean leading) {
+	public ProgramThread compile(String target, boolean ctrl, boolean leading) {
 		System.out.println("Check compile!");
 		return this;
 	}
 	
-	public Thread optCompile(boolean ctrl, boolean leading) {
+	public ProgramThread optCompile(boolean ctrl, boolean leading) {
 		// CHECK!
 		return compile("", false, true);
 	}
 	
-	public Thread allCompile() {
+	public ProgramThread allCompile() {
 		System.out.println("Problem all compile!");
 		return null;
 	}
 
-	public Thread clone() {
+	public ProgramThread clone() {
 		System.out.println("Problem with clone!");
-		return new Thread();
+		return new ProgramThread();
 	}
 
 	public Integer getMainThread() {

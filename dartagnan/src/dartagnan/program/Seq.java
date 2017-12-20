@@ -9,12 +9,12 @@ import dartagnan.utils.LastModMap;
 import dartagnan.utils.MapSSA;
 import dartagnan.utils.Pair;
 
-public class Seq extends Thread {
+public class Seq extends ProgramThread {
 	
-	private Thread t1;
-	private Thread t2;
+	private ProgramThread t1;
+	private ProgramThread t2;
 	
-	public Seq(Thread t1, Thread t2) {
+	public Seq(ProgramThread t1, ProgramThread t2) {
 		this.t1 = t1;
 		this.t2 = t2;
 		this.condLevel = 0;
@@ -27,11 +27,11 @@ public class Seq extends Thread {
 			return String.format("%s;\n%s", t1, t2);
 	}
 	
-	public Thread getT1() {
+	public ProgramThread getT1() {
 		return t1;
 	}
 	
-	public Thread getT2() {
+	public ProgramThread getT2() {
 		return t2;
 	}
 	
@@ -82,8 +82,8 @@ public class Seq extends Thread {
 	}
 	
 	public Seq clone() {
-		Thread newT1 = t1.clone();
-		Thread newT2 = t2.clone();
+		ProgramThread newT1 = t1.clone();
+		ProgramThread newT2 = t2.clone();
 		Seq newSeq = new Seq(newT1, newT2);
 		newSeq.condLevel = condLevel;
 		return newSeq;

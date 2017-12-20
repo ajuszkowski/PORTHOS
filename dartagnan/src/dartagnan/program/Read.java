@@ -48,7 +48,7 @@ public class Read extends MemEvent {
 		return null;
 	}
 
-	public Thread compile(String target, boolean ctrl, boolean leading) {
+	public ProgramThread compile(String target, boolean ctrl, boolean leading) {
 		Load ld = new Load(reg, loc);
 		ld.setHLId(hashCode());
 		ld.condLevel = this.condLevel;
@@ -89,7 +89,7 @@ public class Read extends MemEvent {
 		return null;
 	}
 	
-	public Thread optCompile(boolean ctrl, boolean leading) {
+	public ProgramThread optCompile(boolean ctrl, boolean leading) {
 		Load ld = new Load(reg, loc);
 		ld.setHLId(hashCode());
 		ld.condLevel = this.condLevel;
@@ -117,7 +117,7 @@ public class Read extends MemEvent {
 		return null;
 	}
 	
-	public Thread allCompile() {
+	public ProgramThread allCompile() {
 		Load ld = new Load(reg, loc);
 		ld.setHLId(hashCode());
 		ld.condLevel = this.condLevel;

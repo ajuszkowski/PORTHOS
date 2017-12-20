@@ -1,9 +1,9 @@
-// Generated from Litmus.g4 by ANTLR 4.7
+// Generated from /run/media/ael/Projects/AaltoWork/PORTHOS/dartagnan/Litmus.g4 by ANTLR 4.7
 
 package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
-import dartagnan.program.Thread;
+import dartagnan.program.ProgramThread;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -121,13 +121,13 @@ public class LitmusBaseListener implements LitmusListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterThreads(LitmusParser.ThreadsContext ctx) { }
+	@Override public void enterProgramThreads(LitmusParser.ProgramThreadsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitThreads(LitmusParser.ThreadsContext ctx) { }
+	@Override public void exitProgramThreads(LitmusParser.ProgramThreadsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -8,16 +8,7 @@ import java.util.stream.Collectors;
 
 import com.microsoft.z3.*;
 
-import dartagnan.program.Event;
-import dartagnan.program.If;
-import dartagnan.program.Init;
-import dartagnan.program.Load;
-import dartagnan.program.Local;
-import dartagnan.program.Location;
-import dartagnan.program.MemEvent;
-import dartagnan.program.Program;
-import dartagnan.program.Register;
-import dartagnan.program.Store;
+import dartagnan.program.*;
 
 public class Utils {
 	
@@ -29,10 +20,10 @@ public class Utils {
 		
 		gv.addln("subgraph cluster_Source { rank=sink; fontsize=20; label = \"Program Compiled to Source Architecture\"; color=red; shape=box;");
 		int tid = 0;
-		for(dartagnan.program.Thread t : pSource.getThreads()) {
+		for(ProgramThread t : pSource.getProgramThreads()) {
 			tid++;
 			if(!(t instanceof Init)) {
-				gv.addln("  subgraph cluster_Thread_Source" + t.getTId() + " { rank=sink; fontsize=15; label = \"Thread " + tid + "\"; color=magenta; shape=box;");
+				gv.addln("  subgraph cluster_Thread_Source" + t.getTId() + " { rank=sink; fontsize=15; label = \"ProgramThread " + tid + "\"; color=magenta; shape=box;");
 			}
 			
 			gv.start_subgraph(t.getTId());
@@ -113,10 +104,10 @@ public class Utils {
 
 		gv.addln("subgraph cluster_Target { rank=sink; fontsize=20; label = \"Program Compiled to Target Architecture\"; color=red; shape=box;");
 		tid = 0;
-		for(dartagnan.program.Thread t : pTarget.getThreads()) {
+		for(ProgramThread t : pTarget.getProgramThreads()) {
 			tid++;
 			if(!(t instanceof Init)) {
-				gv.addln("  subgraph cluster_Thread_Target" + t.getTId() + " { rank=sink; fontsize=15; label = \"Thread " + tid + "\"; color=magenta; shape=box;");
+				gv.addln("  subgraph cluster_Thread_Target" + t.getTId() + " { rank=sink; fontsize=15; label = \"ProgramThread " + tid + "\"; color=magenta; shape=box;");
 			}
 			
 			gv.start_subgraph(t.getTId());

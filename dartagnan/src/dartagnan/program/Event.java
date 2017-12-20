@@ -10,7 +10,7 @@ import dartagnan.utils.LastModMap;
 import dartagnan.utils.MapSSA;
 import dartagnan.utils.Pair;
 
-public class Event extends Thread {
+public class Event extends ProgramThread {
 	
 	protected Integer eid;
 	private Integer hlId;
@@ -46,16 +46,16 @@ public class Event extends Thread {
 		condLevel++;
 	}
 
-	public Thread unroll(int steps) {
+	public ProgramThread unroll(int steps) {
 		return this;
 	}
 	
-	public Thread compile(String target, boolean ctrl, boolean leading) {
+	public ProgramThread compile(String target, boolean ctrl, boolean leading) {
 		setHLId(hashCode());
 		return this;
 	}
 
-	public Thread allCompile() {
+	public ProgramThread allCompile() {
 		OptSync os = new OptSync();
 		os.condLevel = condLevel;
 		OptLwsync olws = new OptLwsync();

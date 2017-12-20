@@ -1,9 +1,9 @@
-// Generated from Litmus.g4 by ANTLR 4.7
+// Generated from /run/media/ael/Projects/AaltoWork/PORTHOS/dartagnan/Litmus.g4 by ANTLR 4.7
 
 package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
-import dartagnan.program.Thread;
+import dartagnan.program.ProgramThread;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -39,16 +39,16 @@ public class LitmusParser extends Parser {
 		DIGIT=75, MONIO=76, SYMBOL=77, WS=78, LWSYNC=79, SYNC=80, ISYNC=81;
 	public static final int
 		RULE_program = 0, RULE_bop = 1, RULE_text = 2, RULE_word = 3, RULE_location = 4, 
-		RULE_locationX86 = 5, RULE_registerPower = 6, RULE_registerX86 = 7, RULE_threads = 8, 
+		RULE_locationX86 = 5, RULE_registerPower = 6, RULE_registerX86 = 7, RULE_programThreads = 8, 
 		RULE_inst = 9, RULE_localX86 = 10, RULE_localPower = 11, RULE_xor = 12, 
 		RULE_addi = 13, RULE_mr = 14, RULE_loadX86 = 15, RULE_loadPower = 16, 
 		RULE_storeX86 = 17, RULE_storePower = 18, RULE_cmpw = 19, RULE_mfence = 20, 
 		RULE_lwsync = 21, RULE_sync = 22, RULE_isync = 23;
 	public static final String[] ruleNames = {
 		"program", "bop", "text", "word", "location", "locationX86", "registerPower", 
-		"registerX86", "threads", "inst", "localX86", "localPower", "xor", "addi", 
-		"mr", "loadX86", "loadPower", "storeX86", "storePower", "cmpw", "mfence", 
-		"lwsync", "sync", "isync"
+		"registerX86", "programThreads", "inst", "localX86", "localPower", "xor", 
+		"addi", "mr", "loadX86", "loadPower", "storeX86", "storePower", "cmpw", 
+		"mfence", "lwsync", "sync", "isync"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -122,7 +122,7 @@ public class LitmusParser extends Parser {
 	private Map<String, Map<String, Register>> mapRegs = new HashMap<String, Map<String, Register>>();
 	private Map<String, Map<String, Location>> mapRegLoc = new HashMap<String, Map<String, Location>>();
 	private Map<String, Location> mapLoc = new HashMap<String, Location>();
-	private Map<String, List<Thread>> mapThreads = new HashMap<String, List<Thread>>();
+	private Map<String, List<ProgramThread>> mapThreads = new HashMap<String, List<ProgramThread>>();
 
 	public LitmusParser(TokenStream input) {
 		super(input);
@@ -135,10 +135,10 @@ public class LitmusParser extends Parser {
 		public Token thrd;
 		public RegisterPowerContext r;
 		public Token d;
-		public ThreadsContext threadsList;
+		public ProgramThreadsContext threadsList;
 		public Token value;
-		public ThreadsContext threads() {
-			return getRuleContext(ThreadsContext.class,0);
+		public ProgramThreadsContext programThreads() {
+			return getRuleContext(ProgramThreadsContext.class,0);
 		}
 		public List<TextContext> text() {
 			return getRuleContexts(TextContext.class);
@@ -305,7 +305,7 @@ public class LitmusParser extends Parser {
 									}
 									mapRegs.get(((ProgramContext)_localctx).thrd.getText()).put(regPointer.getName(), regPointer);
 									if(!mapThreads.keySet().contains(((ProgramContext)_localctx).thrd.getText())) {
-										mapThreads.put(((ProgramContext)_localctx).thrd.getText(), new ArrayList<Thread>());
+										mapThreads.put(((ProgramContext)_localctx).thrd.getText(), new ArrayList<ProgramThread>());
 									}
 									mapThreads.get(((ProgramContext)_localctx).thrd.getText()).add(new Local(regPointer, new AConst(Integer.parseInt(((ProgramContext)_localctx).d.getText()))));
 								
@@ -327,9 +327,9 @@ public class LitmusParser extends Parser {
 			setState(86);
 			match(T__6);
 			setState(87);
-			((ProgramContext)_localctx).threadsList = threads();
+			((ProgramContext)_localctx).threadsList = programThreads();
 
-					for(Thread t : ((ProgramContext)_localctx).threadsList.lst) {
+					for(ProgramThread t : ((ProgramContext)_localctx).threadsList.lst) {
 						p.add(t);
 					}
 					((ProgramContext)_localctx).p =  p;
@@ -934,8 +934,8 @@ public class LitmusParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ThreadsContext extends ParserRuleContext {
-		public List<Thread> lst;
+	public static class ProgramThreadsContext extends ParserRuleContext {
+		public List<ProgramThread> lst;
 		public WordContext mainThread;
 		public InstContext t1;
 		public InstContext t2;
@@ -955,23 +955,23 @@ public class LitmusParser extends Parser {
 		public TerminalNode WS(int i) {
 			return getToken(LitmusParser.WS, i);
 		}
-		public ThreadsContext(ParserRuleContext parent, int invokingState) {
+		public ProgramThreadsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_threads; }
+		@Override public int getRuleIndex() { return RULE_programThreads; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LitmusListener ) ((LitmusListener)listener).enterThreads(this);
+			if ( listener instanceof LitmusListener ) ((LitmusListener)listener).enterProgramThreads(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LitmusListener ) ((LitmusListener)listener).exitThreads(this);
+			if ( listener instanceof LitmusListener ) ((LitmusListener)listener).exitProgramThreads(this);
 		}
 	}
 
-	public final ThreadsContext threads() throws RecognitionException {
-		ThreadsContext _localctx = new ThreadsContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_threads);
+	public final ProgramThreadsContext programThreads() throws RecognitionException {
+		ProgramThreadsContext _localctx = new ProgramThreadsContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_programThreads);
 		int _la;
 		try {
 			int _alt;
@@ -984,10 +984,10 @@ public class LitmusParser extends Parser {
 				{
 				{
 				setState(192);
-				((ThreadsContext)_localctx).mainThread = word();
+				((ProgramThreadsContext)_localctx).mainThread = word();
 
-						if(!mapRegs.keySet().contains(((ThreadsContext)_localctx).mainThread.str)) {
-							mapRegs.put(((ThreadsContext)_localctx).mainThread.str, new HashMap<String, Register>());
+						if(!mapRegs.keySet().contains(((ProgramThreadsContext)_localctx).mainThread.str)) {
+							mapRegs.put(((ProgramThreadsContext)_localctx).mainThread.str, new HashMap<String, Register>());
 						}
 					
 				setState(197);
@@ -1022,12 +1022,12 @@ public class LitmusParser extends Parser {
 					{
 					{
 					setState(206);
-					((ThreadsContext)_localctx).t1 = inst(thread.toString());
+					((ProgramThreadsContext)_localctx).t1 = inst(thread.toString());
 
 							if(!mapThreads.keySet().contains(thread.toString())) {
-									mapThreads.put(thread.toString(), new ArrayList<Thread>());
+									mapThreads.put(thread.toString(), new ArrayList<ProgramThread>());
 							}
-							mapThreads.get(thread.toString()).add(((ThreadsContext)_localctx).t1.t);
+							mapThreads.get(thread.toString()).add(((ProgramThreadsContext)_localctx).t1.t);
 						
 					setState(217);
 					_errHandler.sync(this);
@@ -1059,7 +1059,7 @@ public class LitmusParser extends Parser {
 						case ISYNC:
 							{
 							setState(210);
-							((ThreadsContext)_localctx).t2 = inst(thread.toString());
+							((ProgramThreadsContext)_localctx).t2 = inst(thread.toString());
 							}
 							break;
 						case WS:
@@ -1073,9 +1073,9 @@ public class LitmusParser extends Parser {
 						}
 
 								if(!mapThreads.keySet().contains(thread.toString())) {
-										mapThreads.put(thread.toString(), new ArrayList<Thread>());
+										mapThreads.put(thread.toString(), new ArrayList<ProgramThread>());
 								}
-								mapThreads.get(thread.toString()).add(((ThreadsContext)_localctx).t2.t);
+								mapThreads.get(thread.toString()).add(((ProgramThreadsContext)_localctx).t2.t);
 							
 						}
 						}
@@ -1097,18 +1097,18 @@ public class LitmusParser extends Parser {
 				_alt = getInterpreter().adaptivePredict(_input,21,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 
-					List threads = new ArrayList<Thread>();
+					List programThreads = new ArrayList<ProgramThread>();
 					for(String k : mapThreads.keySet()) {
 						If lastIf = null;
-						Thread partialThread = null;
-						Thread partialIfBody = null;
-						for(Thread t : mapThreads.get(k)) {
+						ProgramThread partialProgramThread = null;
+						ProgramThread partialIfBody = null;
+						for(ProgramThread t : mapThreads.get(k)) {
 							if(t != null) {
-								if(partialThread == null && lastIf == null) {
-									partialThread = t;
+								if(partialProgramThread == null && lastIf == null) {
+									partialProgramThread = t;
 								}
 								else if(lastIf == null){
-									partialThread = new Seq(partialThread, t);
+									partialProgramThread = new Seq(partialProgramThread, t);
 								}
 								if(partialIfBody == null) {
 									partialIfBody = t;
@@ -1130,9 +1130,9 @@ public class LitmusParser extends Parser {
 							partialIfBody.setCondLevel(lastIf.getCondLevel()+1);
 							lastIf.setT1(partialIfBody);
 						}
-						threads.add(partialThread);
+						programThreads.add(partialProgramThread);
 					}
-					((ThreadsContext)_localctx).lst =  threads;
+					((ProgramThreadsContext)_localctx).lst =  programThreads;
 				
 			}
 		}
@@ -1149,7 +1149,7 @@ public class LitmusParser extends Parser {
 
 	public static class InstContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public LocalX86Context t1;
 		public LoadX86Context t2;
 		public StoreX86Context t3;
@@ -1386,7 +1386,7 @@ public class LitmusParser extends Parser {
 
 	public static class LocalX86Context extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterX86Context r;
 		public Token d;
 		public RegisterX86Context registerX86() {
@@ -1446,7 +1446,7 @@ public class LitmusParser extends Parser {
 
 	public static class LocalPowerContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r;
 		public Token d;
 		public RegisterPowerContext registerPower() {
@@ -1506,7 +1506,7 @@ public class LitmusParser extends Parser {
 
 	public static class XorContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r1;
 		public RegisterPowerContext r2;
 		public RegisterPowerContext r3;
@@ -1581,7 +1581,7 @@ public class LitmusParser extends Parser {
 
 	public static class AddiContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r1;
 		public RegisterPowerContext r2;
 		public Token d;
@@ -1653,7 +1653,7 @@ public class LitmusParser extends Parser {
 
 	public static class MrContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r1;
 		public RegisterPowerContext r2;
 		public List<RegisterPowerContext> registerPower() {
@@ -1719,7 +1719,7 @@ public class LitmusParser extends Parser {
 
 	public static class LoadX86Context extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterX86Context r;
 		public LocationX86Context l;
 		public RegisterX86Context registerX86() {
@@ -1785,7 +1785,7 @@ public class LitmusParser extends Parser {
 
 	public static class LoadPowerContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r;
 		public RegisterPowerContext rl;
 		public List<RegisterPowerContext> registerPower() {
@@ -1876,7 +1876,7 @@ public class LitmusParser extends Parser {
 
 	public static class StoreX86Context extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public LocationX86Context l;
 		public RegisterX86Context r;
 		public LocationX86Context locationX86() {
@@ -1942,7 +1942,7 @@ public class LitmusParser extends Parser {
 
 	public static class StorePowerContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r;
 		public RegisterPowerContext rl;
 		public List<RegisterPowerContext> registerPower() {
@@ -2033,7 +2033,7 @@ public class LitmusParser extends Parser {
 
 	public static class CmpwContext extends ParserRuleContext {
 		public String mainThread;
-		public Thread t;
+		public ProgramThread t;
 		public RegisterPowerContext r1;
 		public RegisterPowerContext r2;
 		public List<RegisterPowerContext> registerPower() {
@@ -2092,7 +2092,7 @@ public class LitmusParser extends Parser {
 	}
 
 	public static class MfenceContext extends ParserRuleContext {
-		public Thread t;
+		public ProgramThread t;
 		public MfenceContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2130,7 +2130,7 @@ public class LitmusParser extends Parser {
 	}
 
 	public static class LwsyncContext extends ParserRuleContext {
-		public Thread t;
+		public ProgramThread t;
 		public TerminalNode LWSYNC() { return getToken(LitmusParser.LWSYNC, 0); }
 		public LwsyncContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2169,7 +2169,7 @@ public class LitmusParser extends Parser {
 	}
 
 	public static class SyncContext extends ParserRuleContext {
-		public Thread t;
+		public ProgramThread t;
 		public TerminalNode SYNC() { return getToken(LitmusParser.SYNC, 0); }
 		public SyncContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2208,7 +2208,7 @@ public class LitmusParser extends Parser {
 	}
 
 	public static class IsyncContext extends ParserRuleContext {
-		public Thread t;
+		public ProgramThread t;
 		public TerminalNode ISYNC() { return getToken(LitmusParser.ISYNC, 0); }
 		public IsyncContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);

@@ -4,7 +4,7 @@ grammar Litmus;
 package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
-import dartagnan.program.Thread;
+import dartagnan.program.ProgramThread;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ private Map<String, Location> mapLocs = new HashMap<String, Location>();
 private Map<String, Map<String, Register>> mapRegs = new HashMap<String, Map<String, Register>>();
 private Map<String, Map<String, Location>> mapRegLoc = new HashMap<String, Map<String, Location>>();
 private Map<String, Location> mapLoc = new HashMap<String, Location>();
-private Map<String, List<Thread>> mapThreads = new HashMap<String, List<Thread>>();
+private Map<String, List<ProgramThread>> mapThreads = new HashMap<String, List<ProgramThread>>();
 }
 
 program [String name] returns [Program p]: 
@@ -47,14 +47,14 @@ program [String name] returns [Program p]:
 			}
 			mapRegs.get($thrd.getText()).put(regPointer.getName(), regPointer);
 			if(!mapThreads.keySet().contains($thrd.getText())) {
-				mapThreads.put($thrd.getText(), new ArrayList<Thread>());
+				mapThreads.put($thrd.getText(), new ArrayList<ProgramThread>());
 			}
 			mapThreads.get($thrd.getText()).add(new Local(regPointer, new AConst(Integer.parseInt($d.getText()))));
 		}) ';'
 	)+
-	'}' threadsList = threads
+	'}' threadsList = programThreads
 	{
-		for(Thread t : $threadsList.lst) {
+		for(ProgramThread t : $threadsList.lst) {
 			p.add(t);
 		}
 		$p = p;
@@ -108,7 +108,7 @@ registerPower returns [Register reg]:
 registerX86 returns [Register reg]:
 	r = ('EAX' | 'EBX' | 'ECX' | 'EDX') {$reg = new Register($r.getText());};
 
-threads returns [List<Thread> lst]:
+programThreads returns [List<ProgramThread> lst]:
 	(mainThread = word 
 	{
 		if(!mapRegs.keySet().contains($mainThread.str)) {
@@ -119,30 +119,30 @@ threads returns [List<Thread> lst]:
 	{Integer thread = 0;}
 	(t1 = inst [thread.toString()] {
 		if(!mapThreads.keySet().contains(thread.toString())) {
-				mapThreads.put(thread.toString(), new ArrayList<Thread>());
+				mapThreads.put(thread.toString(), new ArrayList<ProgramThread>());
 		}
 		mapThreads.get(thread.toString()).add($t1.t);
 	} 
 	({thread ++;} '|' (t2 = inst [thread.toString()] | WS) {
 		if(!mapThreads.keySet().contains(thread.toString())) {
-				mapThreads.put(thread.toString(), new ArrayList<Thread>());
+				mapThreads.put(thread.toString(), new ArrayList<ProgramThread>());
 		}
 		mapThreads.get(thread.toString()).add($t2.t);
 	}
 	)* ';' {thread = 0;})+
 	{
-		List threads = new ArrayList<Thread>();
+		List programThreads = new ArrayList<ProgramThread>();
 		for(String k : mapThreads.keySet()) {
 			If lastIf = null;
-			Thread partialThread = null;
-			Thread partialIfBody = null;
-			for(Thread t : mapThreads.get(k)) {
+			ProgramThread partialProgramThread = null;
+			ProgramThread partialIfBody = null;
+			for(ProgramThread t : mapThreads.get(k)) {
 				if(t != null) {
-					if(partialThread == null && lastIf == null) {
-						partialThread = t;
+					if(partialProgramThread == null && lastIf == null) {
+						partialProgramThread = t;
 					}
 					else if(lastIf == null){
-						partialThread = new Seq(partialThread, t);
+						partialProgramThread = new Seq(partialProgramThread, t);
 					}
 					if(partialIfBody == null) {
 						partialIfBody = t;
@@ -164,12 +164,12 @@ threads returns [List<Thread> lst]:
 				partialIfBody.setCondLevel(lastIf.getCondLevel()+1);
 				lastIf.setT1(partialIfBody);
 			}
-			threads.add(partialThread);
+			programThreads.add(partialProgramThread);
 		}
-		$lst = threads;
+		$lst = programThreads;
 	};
 
-inst [String mainThread] returns [Thread t]: 
+inst [String mainThread] returns [ProgramThread t]: 
 	| t1 = localX86 [mainThread] {$t = $t1.t;}
 	| t2 = loadX86 [mainThread] {$t = $t2.t;}
 	| t3 = storeX86 [mainThread] {$t = $t3.t;}
@@ -187,7 +187,7 @@ inst [String mainThread] returns [Thread t]:
 	| 'beq' 'LC' word
 	| 'LC' word ':';
 	
-localX86 [String mainThread] returns [Thread t]:
+localX86 [String mainThread] returns [ProgramThread t]:
 	'MOV' r = registerX86 ',$' d = DIGIT {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -197,7 +197,7 @@ localX86 [String mainThread] returns [Thread t]:
 		$t = new Local(pointerReg, new AConst(Integer.parseInt($d.getText())));
 	};
 
-localPower [String mainThread] returns [Thread t]:
+localPower [String mainThread] returns [ProgramThread t]:
 	'li' r = registerPower ',' d = DIGIT {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -207,7 +207,7 @@ localPower [String mainThread] returns [Thread t]:
 		$t = new Local(pointerReg, new AConst(Integer.parseInt($d.getText())));
 	};
 	
-xor [String mainThread] returns [Thread t]:
+xor [String mainThread] returns [ProgramThread t]:
 	'xor' r1 = registerPower ',' r2 = registerPower ',' r3 = registerPower {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r1.reg.getName()))) {
@@ -225,7 +225,7 @@ xor [String mainThread] returns [Thread t]:
 		$t = new Local(pointerReg1, new AExpr(pointerReg2, "xor", pointerReg3));
 	};
 
-addi [String mainThread] returns [Thread t]:
+addi [String mainThread] returns [ProgramThread t]:
 	'addi' r1 = registerPower ',' r2 = registerPower ',' d = DIGIT {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r1.reg.getName()))) {
@@ -239,7 +239,7 @@ addi [String mainThread] returns [Thread t]:
 		$t = new Local(pointerReg1, new AExpr(pointerReg2, "+", new AConst(Integer.parseInt($d.getText()))));
 	};
 
-mr [String mainThread] returns [Thread t]:
+mr [String mainThread] returns [ProgramThread t]:
 	'mr' r1 = registerPower ',' r2 = registerPower {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r1.reg.getName()))) {
@@ -253,7 +253,7 @@ mr [String mainThread] returns [Thread t]:
 		$t = new Local(pointerReg1, pointerReg2);
 	};
 
-loadX86 [String mainThread] returns [Thread t]:
+loadX86 [String mainThread] returns [ProgramThread t]:
 	'MOV' r = registerX86 ',' l = locationX86 {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -267,7 +267,7 @@ loadX86 [String mainThread] returns [Thread t]:
 		$t = new Load(pointerReg, pointerLoc);
 	};
 	
-loadPower [String mainThread] returns [Thread t]:
+loadPower [String mainThread] returns [ProgramThread t]:
 	'lwz' r = registerPower ',0' ('(' | ',') rl = registerPower (')')* {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		if(!(mapThreadRegs.keySet().contains($r.reg.getName()))) {
@@ -281,7 +281,7 @@ loadPower [String mainThread] returns [Thread t]:
 		$t = new Load(pointerReg, pointerLoc);
 	};
 
-storeX86 [String mainThread] returns [Thread t]:
+storeX86 [String mainThread] returns [ProgramThread t]:
 	'MOV' l = locationX86 ',' r = registerX86 {
 		if(!(mapLocs.keySet().contains($l.loc.getName()))) {
 			System.out.println(String.format("Location %s must be initialized", $l.loc.getName()));
@@ -295,7 +295,7 @@ storeX86 [String mainThread] returns [Thread t]:
 		$t = new Store(pointerLoc, pointerReg);
 	};
 		
-storePower [String mainThread] returns [Thread t]:
+storePower [String mainThread] returns [ProgramThread t]:
 	'stw' r = registerPower ',0' ('(' | ',') rl = registerPower (')')* {
 		if(!(mapRegLoc.get(mainThread).keySet().contains($rl.reg.getName()))) {
 			System.out.println(String.format("Register %s must be initialized to a location", $rl.reg.getName()));
@@ -309,7 +309,7 @@ storePower [String mainThread] returns [Thread t]:
 		$t = new Store(pointerLoc, pointerReg);
 	};
 	
-cmpw [String mainThread] returns [Thread t]:
+cmpw [String mainThread] returns [ProgramThread t]:
 	'cmpw' r1 = registerPower ',' r2 = registerPower {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		Register pointerReg1 = mapThreadRegs.get($r1.reg.getName());
@@ -317,16 +317,16 @@ cmpw [String mainThread] returns [Thread t]:
 		$t = new If(new Atom(pointerReg1, "==", pointerReg2), new Skip(), new Skip());
 	};
 	
-mfence returns [Thread t]:
+mfence returns [ProgramThread t]:
 	'MFENCE' {$t = new Mfence();};
 
-lwsync returns [Thread t]:
+lwsync returns [ProgramThread t]:
 	LWSYNC {$t = new Lwsync();};
 
-sync returns [Thread t]:
+sync returns [ProgramThread t]:
 	SYNC {$t = new Sync();};
 
-isync returns [Thread t]:
+isync returns [ProgramThread t]:
 	ISYNC {$t = new Isync();};
 
 ARCH : X86 | POWER;

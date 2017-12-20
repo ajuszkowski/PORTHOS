@@ -1,9 +1,9 @@
-// Generated from Porthos.g4 by ANTLR 4.7
+// Generated from /run/media/ael/Projects/AaltoWork/PORTHOS/dartagnan/Porthos.g4 by ANTLR 4.7
 
 package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
-import dartagnan.program.Thread;
+import dartagnan.program.ProgramThread;
 import java.util.HashMap;
 import java.util.Map;
 

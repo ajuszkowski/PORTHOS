@@ -48,7 +48,7 @@ public class Write extends MemEvent {
 		return null;
 	}
 
-	public Thread compile(String target, boolean ctrl, boolean leading) {
+	public ProgramThread compile(String target, boolean ctrl, boolean leading) {
 		Store st = new Store(loc, reg);
 		st.setHLId(hashCode());
 		st.condLevel = this.condLevel;
@@ -105,7 +105,7 @@ public class Write extends MemEvent {
 		return null;
 	}
 
-	public Thread optCompile(String target, boolean ctrl, boolean leading) {
+	public ProgramThread optCompile(String target, boolean ctrl, boolean leading) {
 		Store st = new Store(loc, reg);
 		st.setHLId(hashCode());
 		st.condLevel = this.condLevel;
@@ -133,7 +133,7 @@ public class Write extends MemEvent {
 		return null;
 	}
 	
-	public Thread allCompile() {
+	public ProgramThread allCompile() {
 		Store st = new Store(loc, reg);
 		st.setHLId(hashCode());
 		st.condLevel = this.condLevel;

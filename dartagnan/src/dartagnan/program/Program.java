@@ -17,24 +17,24 @@ public class Program {
 	
 	public String name;
 	public Assert ass; 
-	private List<Thread> threads;
+	private List<ProgramThread> programThreads;
 	public MapSSA lastMap;
 
 	public Program (String name) {
 		this.name = name;
-		this.threads = new ArrayList<Thread>();
+		this.programThreads = new ArrayList<ProgramThread>();
 	}
 	
-	public void add(Thread t) {
-		threads.add(t);
+	public void add(ProgramThread t) {
+		programThreads.add(t);
 	}
 	
 	public String toString() {
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		String output = name + "\n";
 		while (iter.hasNext()) {
-			Thread next = iter.next();
+			ProgramThread next = iter.next();
 			if(next instanceof Init) {
 				continue;
 			}
@@ -44,15 +44,15 @@ public class Program {
 	}
 	
 	public Program clone() {
-		List<Thread> newThreads = new ArrayList<Thread>();
+		List<ProgramThread> newProgramThreads = new ArrayList<ProgramThread>();
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
-			newThreads.add(t.clone());
+			ProgramThread t = iter.next();
+			newProgramThreads.add(t.clone());
 		}
 		Program newP = new Program(name);
-		newP.setThreads(newThreads);
+		newP.setProgramThreads(newProgramThreads);
 		return newP;
 	}
 	
@@ -61,41 +61,41 @@ public class Program {
 	}
 	
 	public void initialize(int steps) {
-		List<Thread> unrolledThreads = new ArrayList<Thread>();
+		List<ProgramThread> unrolledProgramThreads = new ArrayList<ProgramThread>();
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 			t = t.unroll(steps);
-			unrolledThreads.add(t);
+			unrolledProgramThreads.add(t);
 		}
-		threads = unrolledThreads;
+		programThreads = unrolledProgramThreads;
 		
 		Set<Location> locs = getEvents().stream().filter(e -> e instanceof MemEvent).map(e -> ((MemEvent) e).getLoc()).collect(Collectors.toSet());
 		for(Location loc : locs) {
-			threads.add(new Init(loc));
+			programThreads.add(new Init(loc));
 		}
 	}
 	
 	public void compile(String target, boolean ctrl, boolean leading) {
-		List<Thread> compiledThreads = new ArrayList<Thread>();
+		List<ProgramThread> compiledProgramThreads = new ArrayList<ProgramThread>();
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 			t = t.compile(target, ctrl, leading);
-			compiledThreads.add(t);
+			compiledProgramThreads.add(t);
 		}
-		threads = compiledThreads;
+		programThreads = compiledProgramThreads;
 
 		setTId();
 		setEId();
 		setMainThread();
 		
 		// Set the thread for the registers
-		iter = threads.listIterator();
+		iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
             t.setCondRegs(new HashSet<Register>());
             t.setLastModMap(new LastModMap());
 			Set<Register> regs = t.getEvents().stream().filter(e -> e instanceof Load).map(e -> ((Load) e).getReg()).collect(Collectors.toSet());
@@ -108,24 +108,24 @@ public class Program {
 	}	
 
 	public void compile(String target, boolean ctrl, boolean leading, Integer firstEid) {
-		List<Thread> compiledThreads = new ArrayList<Thread>();
+		List<ProgramThread> compiledProgramThreads = new ArrayList<ProgramThread>();
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 			t = t.compile(target, ctrl, leading);
-			compiledThreads.add(t);
+			compiledProgramThreads.add(t);
 		}
-		threads = compiledThreads;
+		programThreads = compiledProgramThreads;
 
 		setTId();
 		setEId(firstEid);
 		setMainThread();
 		
 		// Set the thread for the registers
-		iter = threads.listIterator();
+		iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
             t.setCondRegs(new HashSet<Register>());
             t.setLastModMap(new LastModMap());
 			Set<Register> regs = t.getEvents().stream().filter(e -> e instanceof Load).map(e -> ((Load) e).getReg()).collect(Collectors.toSet());
@@ -138,24 +138,24 @@ public class Program {
 	}	
 
 	public void optCompile(Integer firstEId, boolean ctrl, boolean leading) {
-		List<Thread> compiledThreads = new ArrayList<Thread>();
+		List<ProgramThread> compiledProgramThreads = new ArrayList<ProgramThread>();
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 			t = t.optCompile(ctrl, leading);
-			compiledThreads.add(t);
+			compiledProgramThreads.add(t);
 		}
-		threads = compiledThreads;
+		programThreads = compiledProgramThreads;
 		
 		setTId();
 		setEId(firstEId);
 		setMainThread();
 		
 		// Set the thread for the registers
-		iter = threads.listIterator();
+		iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
             t.setCondRegs(new HashSet<Register>());
             t.setLastModMap(new LastModMap());
 			Set<Register> regs = t.getEvents().stream().filter(e -> e instanceof Load).map(e -> ((Load) e).getReg()).collect(Collectors.toSet());
@@ -168,24 +168,24 @@ public class Program {
 	}
 	
 	public void allCompile(Integer firstEId) {
-		List<Thread> compiledThreads = new ArrayList<Thread>();
+		List<ProgramThread> compiledProgramThreads = new ArrayList<ProgramThread>();
 		
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 			t = t.allCompile();
-			compiledThreads.add(t);
+			compiledProgramThreads.add(t);
 		}
-		threads = compiledThreads;
+		programThreads = compiledProgramThreads;
 		
 		setTId();
 		setEId(firstEId);
 		setMainThread();
 		
 		// Set the thread for the registers
-		iter = threads.listIterator();
+		iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
             t.setCondRegs(new HashSet<Register>());
             t.setLastModMap(new LastModMap());
 			Set<Register> regs = t.getEvents().stream().filter(e -> e instanceof Load).map(e -> ((Load) e).getReg()).collect(Collectors.toSet());
@@ -292,7 +292,7 @@ public class Program {
 	
 	public Set<Event> getEvents() {
 		Set<Event> ret = new HashSet<Event>();
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
 			ret.addAll(iter.next().getEvents());
 		}
@@ -300,45 +300,45 @@ public class Program {
 	}
 	
 	public void setMainThread() {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 		    t.setMainThread(t.tid);
 		}
 	}
 	
 	public void setEId() {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		Integer lastId = 1;
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 		    lastId = t.setEId(lastId);
 		}
 	}
 
 	public void setEId(Integer lastId) {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 		    lastId = t.setEId(lastId);
 		}
 	}
 
 	public void setTId() {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		Integer lastId = 1;
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 		    lastId = t.setTId(lastId);
 		}
 	}
 
 	public BoolExpr encodeDF(Context ctx) throws Z3Exception {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		MapSSA lastMap = new MapSSA();
 		BoolExpr enc = ctx.mkTrue();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 			Pair<BoolExpr, MapSSA>recResult = t.encodeDF(lastMap, ctx);
 		    enc = ctx.mkAnd(enc, recResult.getFirst());
 		    lastMap = recResult.getSecond();
@@ -352,24 +352,24 @@ public class Program {
 	}
 	
 	public BoolExpr encodeCF(Context ctx) throws Z3Exception {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		BoolExpr enc = ctx.mkTrue();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 		    enc = ctx.mkAnd(enc, t.encodeCF(ctx));
-		    // Main threads are active
+		    // Main programThreads are active
 		    enc = ctx.mkAnd(enc, ctx.mkBoolConst(t.cfVar()));
 		}
 		return enc;
 	}
 	
 	public BoolExpr allExecute(Context ctx) throws Z3Exception {
-		ListIterator<Thread> iter = threads.listIterator();
+		ListIterator<ProgramThread> iter = programThreads.listIterator();
 		BoolExpr enc = ctx.mkTrue();
 		while (iter.hasNext()) {
-			Thread t = iter.next();
+			ProgramThread t = iter.next();
 		    enc = ctx.mkAnd(enc, t.allExecute(ctx));
-		    // Main threads are active
+		    // Main programThreads are active
 		    enc = ctx.mkAnd(enc, ctx.mkBoolConst(t.cfVar()));
 		}
 		return enc;
@@ -389,12 +389,12 @@ public class Program {
 		return enc;
 	}
 
-	public List<Thread> getThreads() {
-		return this.threads;
+	public List<ProgramThread> getProgramThreads() {
+		return this.programThreads;
 	}
 	
-	public void setThreads(List<Thread> threads) {
-		this.threads = threads;
+	public void setProgramThreads(List<ProgramThread> programThreads) {
+		this.programThreads = programThreads;
 	}
 
 }

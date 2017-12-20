@@ -7,11 +7,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import dartagnan.LitmusLexer;
+import dartagnan.LitmusParser;
+import dartagnan.PorthosLexer;
+import dartagnan.PorthosParser;
+import dartagnan.CminLexer;
+import dartagnan.CminParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.io.FileUtils;
 
-import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
 import com.microsoft.z3.Model;
 import com.microsoft.z3.Solver;
@@ -19,10 +24,6 @@ import com.microsoft.z3.Status;
 import com.microsoft.z3.Z3Exception;
 import com.microsoft.z3.enumerations.Z3_ast_print_mode;
 
-import dartagnan.LitmusLexer;
-import dartagnan.LitmusParser;
-import dartagnan.PorthosLexer;
-import dartagnan.PorthosParser;
 import dartagnan.expression.Assert;
 import dartagnan.program.Init;
 import dartagnan.program.Program;
@@ -115,7 +116,7 @@ public class Porthos {
 		Program p = new Program(inputFilePath);
 		
 		if(inputFilePath.endsWith("litmus")) {
-			LitmusLexer lexer = new LitmusLexer(input);	
+			LitmusLexer lexer = new LitmusLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			LitmusParser parser = new LitmusParser(tokens);    
 			p = parser.program(inputFilePath).p; 
@@ -127,7 +128,14 @@ public class Porthos {
 			PorthosParser parser = new PorthosParser(tokens);
 			p = parser.program(inputFilePath).p;
 		}
-	
+
+		if(inputFilePath.endsWith("cmin")) {
+            CminLexer lexer = new CminLexer(input);
+			CommonTokenStream tokens = new CommonTokenStream(lexer);
+			CminParser parser = new CminParser(tokens);
+			p = parser.program(inputFilePath).p;
+		}
+
 		p.initialize();
 		Program pSource = p.clone();
 		Program pTarget = p.clone();

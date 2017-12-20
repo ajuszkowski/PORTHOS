@@ -1,9 +1,9 @@
-// Generated from Litmus.g4 by ANTLR 4.7
+// Generated from /run/media/ael/Projects/AaltoWork/PORTHOS/dartagnan/Litmus.g4 by ANTLR 4.7
 
 package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
-import dartagnan.program.Thread;
+import dartagnan.program.ProgramThread;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -97,15 +97,15 @@ public interface LitmusListener extends ParseTreeListener {
 	 */
 	void exitRegisterX86(LitmusParser.RegisterX86Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link LitmusParser#threads}.
+	 * Enter a parse tree produced by {@link LitmusParser#programThreads}.
 	 * @param ctx the parse tree
 	 */
-	void enterThreads(LitmusParser.ThreadsContext ctx);
+	void enterProgramThreads(LitmusParser.ProgramThreadsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LitmusParser#threads}.
+	 * Exit a parse tree produced by {@link LitmusParser#programThreads}.
 	 * @param ctx the parse tree
 	 */
-	void exitThreads(LitmusParser.ThreadsContext ctx);
+	void exitProgramThreads(LitmusParser.ProgramThreadsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LitmusParser#inst}.
 	 * @param ctx the parse tree
