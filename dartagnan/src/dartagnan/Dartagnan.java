@@ -15,6 +15,7 @@ import com.microsoft.z3.Status;
 import com.microsoft.z3.Z3Exception;
 import com.microsoft.z3.enumerations.Z3_ast_print_mode;
 
+import dartagnan.languages.generated.*;
 import dartagnan.program.Program;
 import dartagnan.wmm.Domain;
 
@@ -72,7 +73,7 @@ public class Dartagnan {
 		Program p = new Program(inputFilePath);
 		
 		if(inputFilePath.endsWith("litmus")) {
-			LitmusLexer lexer = new LitmusLexer(input);	
+			LitmusLexer lexer = new LitmusLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			LitmusParser parser = new LitmusParser(tokens);    
 			p = parser.program(inputFilePath).p; 
@@ -82,6 +83,13 @@ public class Dartagnan {
 			PorthosLexer lexer = new PorthosLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			PorthosParser parser = new PorthosParser(tokens);
+			p = parser.program(inputFilePath).p;
+		}
+
+		if(inputFilePath.endsWith("cmin")) {
+			CminLexer lexer = new CminLexer(input);
+			CommonTokenStream tokens = new CommonTokenStream(lexer);
+            CminParser parser = new CminParser(tokens);
 			p = parser.program(inputFilePath).p;
 		}
 	

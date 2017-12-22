@@ -1,7 +1,6 @@
-grammar Porthos;
+grammar Cmin;
 
 @header{
-package dartagnan;
 import dartagnan.program.*;
 import dartagnan.expression.*;
 import dartagnan.program.ProgramThread;
@@ -11,7 +10,7 @@ import java.util.Map;
 @parser::members
 {
 private Map<String, Location> mapLocs = new HashMap<String, Location>();
-private Map<String, Map<String, Register>> mapRegs = new HashMap<String, Map<String, Register>>();	
+private Map<String, Map<String, Register>> mapRegs = new HashMap<String, Map<String, Register>>();
 }
 
 arith_expr [String mainThread] returns [AExpr expr]:
@@ -26,24 +25,24 @@ arith_atom [String mainThread] returns [AExpr expr]:
 	| r = register {
 		Map<String, Register> mapThreadRegs = mapRegs.get(mainThread);
 		$expr = mapThreadRegs.get($r.reg.getName());
-	} 
+	}
 	| LPAR e = arith_expr [mainThread] RPAR {
 		$expr = $e.expr;
 	};
-arith_comp [String mainThread] returns [BExpr expr]: 
+arith_comp [String mainThread] returns [BExpr expr]:
 	LPAR a1 = arith_expr [mainThread] op = COMP_OP a2 = arith_expr [mainThread] RPAR {
 		$expr = new Atom($a1.expr, $op.getText(), $a2.expr);
 	};
 
-bool_expr [String mainThread] returns [BExpr expr]: 
+bool_expr [String mainThread] returns [BExpr expr]:
 	| b = bool_atom [mainThread] {$expr = $b.expr;}
 	| b1 = bool_atom [mainThread] op = BOOL_OP b2 = bool_atom [mainThread] {
 		$expr = new BExpr($b1.expr, $op.getText(), $b2.expr);
 	};
-bool_atom [String mainThread] returns [BExpr expr]: 
+bool_atom [String mainThread] returns [BExpr expr]:
 	| ('True' | 'true') {$expr = new BConst(true);}
-	| ('False' | 'false') {$expr = new BConst(false);} 
-	| ae = arith_comp [mainThread] {$expr = $ae.expr;} 
+	| ('False' | 'false') {$expr = new BConst(false);}
+	| ae = arith_comp [mainThread] {$expr = $ae.expr;}
 	| LPAR be = bool_expr [mainThread] RPAR {$expr = $be.expr;};
 
 location returns [Location loc]:
@@ -116,7 +115,7 @@ fence returns [ProgramThread t]:
 	| mfence {$t = new Mfence();}
 	| sync {$t = new Sync();}
 	| lwsync {$t = new Lwsync();}
-	| isync {$t = new Isync();}; 
+	| isync {$t = new Isync();};
 
 mfence : 'mfence';
 sync : 'sync';
@@ -125,8 +124,8 @@ isync : 'isync';
 
 inst [String mainThread] returns [ProgramThread t]:
 	| t1 = atom [mainThread] {$t = $t1.t;}
-	| t2 = seq [mainThread] {$t = $t2.t;} 
-	| t3 = while_ [mainThread] {$t = $t3.t;} 
+	| t2 = seq [mainThread] {$t = $t2.t;}
+	| t3 = while_ [mainThread] {$t = $t3.t;}
 	| t4 = if1 [mainThread] {$t = $t4.t;}
 	| t5 = if2 [mainThread] {$t = $t5.t;};
 atom [String mainThread] returns [ProgramThread t]:
@@ -136,16 +135,16 @@ atom [String mainThread] returns [ProgramThread t]:
 	| t4 = fence {$t = $t4.t;}
 	| t5 = read [mainThread] {$t = $t5.t;}
 	| t6 = write [mainThread] {$t = $t6.t;};
-seq [String mainThread] returns [ProgramThread t]: 
-	| t1 = atom [mainThread] ';' t2 = inst[mainThread] {$t = new Seq($t1.t, $t2.t);} 
+seq [String mainThread] returns [ProgramThread t]:
+	| t1 = atom [mainThread] ';' t2 = inst[mainThread] {$t = new Seq($t1.t, $t2.t);}
 	| t3 = while_ [mainThread] ';' t4 = inst[mainThread] {$t = new Seq($t3.t, $t4.t);}
 	| t5 = if1 [mainThread] ';' t6 = inst[mainThread] {$t = new Seq($t5.t, $t6.t);}
 	| t7 = if2 [mainThread] ';' t8 = inst[mainThread] {$t = new Seq($t7.t, $t8.t);};
-if1 [String mainThread] returns [ProgramThread t]: 
+if1 [String mainThread] returns [ProgramThread t]:
 	'if' b = bool_expr [mainThread] ('then')* LCBRA t1 = inst [mainThread] RCBRA 'else' LCBRA t2 = inst [mainThread] RCBRA {
 		$t = new If($b.expr, $t1.t, $t2.t);
 	};
-if2 [String mainThread] returns [ProgramThread t]: 
+if2 [String mainThread] returns [ProgramThread t]:
 	'if' b = bool_expr [mainThread] ('then')* LCBRA t1 = inst [mainThread] RCBRA {
 		$t = new If($b.expr, $t1.t, new Skip());
 	};
@@ -159,7 +158,7 @@ program [String name] returns [Program p]:
 	{
 		Program p = new Program(name);
 		p.ass = new Assert();
-	} 
+	}
 	LCBRA l = location {
 		mapLocs.put($l.loc.getName(), $l.loc);
 	} 
